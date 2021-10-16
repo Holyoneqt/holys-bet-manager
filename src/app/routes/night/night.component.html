@@ -1,0 +1,106 @@
+<div *ngIf="!(isLoading$ | async)" class="grid" @fadeIn>
+  <app-card *ngIf="(night$ | async)?.fights !== undefined">
+    <app-night-dashboard [night]="night$ | async"></app-night-dashboard>
+  </app-card>
+
+  <app-card [content-center]="true" (click)="addFight()" class="mt-4">
+    <p class="flex">
+      Add Fight
+      <mat-icon class="ml-1">add</mat-icon>
+    </p>
+  </app-card>
+
+  <app-card *ngFor="let fight of allFights$ | async">
+    <div class="grid grid-2">
+      <p
+        class="text-large text-center text-bold"
+        [class.text-bold]="fight.winner === fight.firstFighter.name"
+      >
+        {{ fight.firstFighter.name }}
+      </p>
+      <p
+        class="text-large text-center text-bold"
+        [class.text-bold]="fight.winner === fight.secondFighter.name"
+      >
+        {{ fight.secondFighter.name }}
+      </p>
+    </div>
+
+    <div [@collapse]="fight.isOpen ? 'open' : 'closed'">
+      <div class="grid grid-2 mt-3">
+        <div>
+          <p
+            *ngFor="let player of fight.firstFighter.players"
+            class="text-center"
+          >
+            {{ player }}
+          </p>
+        </div>
+        <div>
+          <p
+            *ngFor="let player of fight.secondFighter.players"
+            class="text-center"
+          >
+            {{ player }}
+          </p>
+        </div>
+        <p class="colspan-2 text-center">Bet: {{ fight.bet ?? "?" }}.-</p>
+      </div>
+
+      <div class="grid grid-2 mt-4" *ngIf="!fight.winner">
+        <button
+          appButton
+          (click)="setWinner(fight.id, fight.firstFighter.name)"
+        >
+          Set Winner
+        </button>
+        <button
+          appButton
+          (click)="setWinner(fight.id, fight.secondFighter.name)"
+        >
+          Set Winner
+        </button>
+      </div>
+    </div>
+
+    <p
+      *ngIf="fight.isOpen"
+      class="text-center text-small mt-4 pt-2 pb-2"
+      (click)="fight.isOpen = false"
+    >
+      Hide Details
+    </p>
+
+    <p
+      *ngIf="!fight.isOpen"
+      class="text-center text-small mt-4 pt-2 pb-2 flex justify-center"
+      (click)="fight.isOpen = true"
+    >
+      View Details
+      <mat-icon *ngIf="fight.winner === undefined" class="ml-4"
+        >warning_amber</mat-icon
+      >
+    </p>
+  </app-card>
+
+  <app-card
+    [contextMenu]="contextMenuEdit"
+    (contextMenuClick)="addPlayers()"
+    class="mt-5"
+  >
+    <p class="text-large text-center mb-2">Players</p>
+    <div class="grid grid-2">
+      <p *ngFor="let player of (night$ | async)?.players" class="text-center">
+        {{ player }}
+      </p>
+    </div>
+    <button
+      *ngIf="(night$ | async)?.players === undefined"
+      class="mt-6"
+      appButton
+      (click)="addPlayers()"
+    >
+      Add Players
+    </button>
+  </app-card>
+</div>

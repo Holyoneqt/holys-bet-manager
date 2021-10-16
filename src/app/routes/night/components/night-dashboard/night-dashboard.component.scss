@@ -1,0 +1,36 @@
+.night-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  &-row {
+    display: contents;
+
+    &.header {
+      font-weight: bold;
+    }
+
+    &:nth-child(2n) {
+      span {
+        background-color: var(--color-light);
+      }
+    }
+    
+    span {
+      padding: 8px;
+      border-bottom: 2px solid var(--color-light-accent);
+      text-align: center;
+
+      &.first {
+        text-align: left;
+      }
+
+      &.plus {
+        background-color: #d8f1bb;
+        text-align: right;
+      }
+      &.minus {
+        background-color: #ffbdbd;
+        text-align: right;
+      }
+    }
+  }
+}

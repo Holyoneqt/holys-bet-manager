@@ -1,0 +1,26 @@
+.selector {
+  --translate-x: 50%;
+
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid var(--color-dark);
+  border-radius: 8px;
+  width: 50%;
+  padding: 4px 8px;
+  gap: 8px;
+  transition: 0.3s ease;
+  transform: translateX(var(--translate-x));
+
+  &-container {
+    gap: 12px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &.left {
+    --translate-x: 0%;
+  }
+  &.right {
+    --translate-x: 100%;
+  }
+}

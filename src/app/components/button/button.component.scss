@@ -1,0 +1,17 @@
+.app-button {
+  padding: 8px 16px;
+  border: 2px solid var(--color-primary);
+  border-radius: 8px;
+  background-color: var(--color-white);
+  color: var(--color-dark);
+  transition: .3s ease;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover {
+    background-color: var(--color-primary);
+  }
+}

@@ -1,0 +1,16 @@
+<div
+  class="app-context-menu"
+  [@contextMenu]="animationState"
+  (@contextMenu.start)="onAnimationStart($event)"
+  (@contextMenu.done)="onAnimationDone($event)"
+>
+  <div
+    *ngFor="let item of items"
+    [class.app-context-menu-item]="item.type === 'item'"
+    [class.app-context-menu-seperator]="item.type === 'seperator'"
+    (click)="onItemClick(item)"
+  >
+    <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
+    <p>{{ item.display }}</p>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="night-dashboard-grid">
+  <div class="night-dashboard-grid-row header">
+    <span></span><span>Einsatz</span><span>Gewinn</span><span>Total</span>
+  </div>
+  <ng-container
+    *ngFor="let player of night?.players"
+    [ngTemplateOutlet]="playerSummary"
+    [ngTemplateOutletContext]="{ data: getPlayerSummary(player) }"
+  >
+  </ng-container>
+</div>
+
+<ng-template #playerSummary let-player="data">
+  <div class="night-dashboard-grid-row">
+    <span class="first">
+      {{ player.name }}
+    </span>
+    <span>
+      {{ player.totalBets }}
+    </span>
+    <span>
+      {{ player.totalWon }}
+    </span>
+    <span [class.plus]="player.overall > 0" [class.minus]="player.overall < 0">
+      {{ player.overall }}
+    </span>
+  </div>
+</ng-template>

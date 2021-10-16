@@ -1,0 +1,15 @@
+<div class="app-card-content">
+  <ng-content></ng-content>
+</div>
+<div class="app-card-action">
+  <ng-content select="[appCardAction]"></ng-content>
+</div>
+
+<div
+  *ngIf="contextMenu !== undefined"
+  class="app-card-context-menu"
+  [appContextMenu]="contextMenu"
+  (contextMenuClick)="contextMenuClick.emit($event)"
+>
+  <mat-icon> more_horiz </mat-icon>
+</div>

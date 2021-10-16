@@ -1,0 +1,41 @@
+.app-card {
+  position: relative;
+  display: flex;
+  width: 100%;
+  padding: 16px;
+  background-color: var(--color-white);
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+  &.content-center {
+    .app-card-content {
+      place-items: center;
+      place-content: center;
+    }
+  }
+
+  &-content, 
+  &-action {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-content {
+    flex-grow: 1;
+    width: 100%;
+  }
+
+  &-action {
+    justify-content: center;
+  }
+
+  &-context-menu {
+    display: flex;
+    position: absolute;
+    cursor: pointer;
+    top: 0px;
+    right: 0px;
+    padding: 12px;
+  }
+
+}

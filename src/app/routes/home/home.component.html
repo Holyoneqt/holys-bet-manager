@@ -1,0 +1,15 @@
+<div class="grid">
+  <app-card *ngFor="let night of allNights$ | async" (click)="navigateToNight(night.id)">
+    <p>
+      {{ night.name }}
+    </p>
+    <p>
+      {{ night.timestamp | date: "dd.MM.yyyy" }}
+    </p>
+    <mat-icon appCardAction> chevron_right </mat-icon>
+  </app-card>
+
+  <app-card [content-center]="true" (click)="addNewNight()">
+    <mat-icon>add</mat-icon>
+  </app-card>
+</div>

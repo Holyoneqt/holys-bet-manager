@@ -1,1 +1,28 @@
+@use '~@angular/material' as mat;
+
 /* You can add global styles to this file, and also import other style files */
+@import './styles/variables.scss';
+@import './styles/layout.scss';
+@import './styles/reset.scss';
+@import './styles/typo.scss';
+@import './styles/spacing.scss';
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@include mat.core();
+
+$holys-bet-manager-primary: mat.define-palette(mat.$indigo-palette);
+$holys-bet-manager-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$holys-bet-manager-warn: mat.define-palette(mat.$red-palette);
+$holys-bet-manager-theme: mat.define-light-theme((
+  color: (
+    primary: $holys-bet-manager-primary,
+    accent: $holys-bet-manager-accent,
+    warn: $holys-bet-manager-warn,
+  )
+));
+
+@include mat.all-component-themes($holys-bet-manager-theme);

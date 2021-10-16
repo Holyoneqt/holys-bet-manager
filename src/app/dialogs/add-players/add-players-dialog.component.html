@@ -1,0 +1,16 @@
+<div class="grid">
+  <app-form-field
+    *ngFor="let player of players"
+    [label]="'Player ' + player.index"
+  >
+    <input appInput [value]="player.name" />
+  </app-form-field>
+
+  <button appButton (click)="addPlayer()">
+    <mat-icon>add</mat-icon>
+  </button>
+
+  <button appButton (click)="submit()" class="mt-4">
+    Ok
+  </button>
+</div>
