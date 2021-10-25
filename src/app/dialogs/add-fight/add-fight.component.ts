@@ -1,44 +1,65 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { Bet, Fight } from 'src/app/models/ufc.models';
+
+export interface PlaceBetsDialogData {
+  fight: Fight;
+  players: string[];
+}
 
 @Component({
-  selector: 'app-add-fight',
+  selector: 'app-place-bets',
   templateUrl: './add-fight.component.html',
   styleUrls: ['./add-fight.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  host: {
+    class: 'app-place-bets',
+  },
 })
-export class AddFightDialogComponent implements OnInit {
+export class PlaceBetsDialogComponent implements OnInit {
   public playerData: {
     player: string;
     selection: number;
   }[];
 
   constructor(
-    public dialogRef: MatDialogRef<AddFightDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public players$: Observable<string[]>
+    public dialogRef: MatDialogRef<PlaceBetsDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: PlaceBetsDialogData
   ) {}
 
   ngOnInit(): void {
-    this.players$.pipe(first()).subscribe((players) => {
-      this.playerData = players.map((p) => ({
-        player: p,
-        selection: -1,
-      }));
-    });
+    this.playerData = this.data.players.map((p) => ({
+      player: p,
+      selection: -1,
+    }));
   }
 
-  public submit(fighterOne: string, fighterTwo: string, bet: string): void {
+  public submit(betAmount: string): void {
     const firstFighter = {
-      name: fighterOne,
-      players: this.playerData.filter(p => p.selection === 0).map(p => p.player),
-    }
-    
+      id: this.data.fight.Fighters[0].FighterId,
+      name: this.data.fight.Fighters[0].LastName,
+      players: this.playerData
+        .filter((p) => p.selection === 0)
+        .map((p) => p.player),
+    };
+
     const secondFighter = {
-      name: fighterTwo,
-      players: this.playerData.filter(p => p.selection === 1).map(p => p.player),
-    }
-    
-    this.dialogRef.close([ firstFighter, secondFighter, parseFloat(bet) ]);
+      id: this.data.fight.Fighters[1].FighterId,
+      name: this.data.fight.Fighters[1].LastName,
+      players: this.playerData
+        .filter((p) => p.selection === 1)
+        .map((p) => p.player),
+    };
+
+    const bet: Bet = {
+      fightId: this.data.fight.FightId,
+      fighters: {
+        first: firstFighter,
+        second: secondFighter,
+      },
+      betAmount: parseFloat(betAmount),
+    };
+
+    this.dialogRef.close(bet);
   }
 }

@@ -2,13 +2,9 @@
   <input type="number" appInput #bet [value]="5" />
 </app-form-field>
 <div class="flex">
-  <app-form-field label="Fighter 1">
-    <input appInput #fighterOne/>
-  </app-form-field>
-  <p class="text-center mt-4">vs.</p>
-  <app-form-field label="Fighter 2">
-    <input appInput #fighterTwo/>
-  </app-form-field>
+  <p class="text-center text-bold w-full">{{data.fight.Fighters[0].LastName}}</p>
+  <p class="text-center">vs.</p>
+  <p class="text-center text-bold w-full">{{data.fight.Fighters[1].LastName}}</p>
 </div>
 <div class="selector-container mt-4">
   <div
@@ -18,15 +14,17 @@
     [class.right]="player.selection === 1"
   >
     <mat-icon class="selector-left" (click)="player.selection = 0"
+    [class.invisible]="player.selection === 0"
       >chevron_left</mat-icon
     >
-    <span>{{ player.player }} </span>
+    <span class="text-small">{{ player.player }} </span>
     <mat-icon class="selector-right" (click)="player.selection = 1"
+      [class.invisible]="player.selection === 1"
       >chevron_right</mat-icon
     >
   </div>
 </div>
 
-<button class="w-full mt-4" appButton (click)="submit(fighterOne.value, fighterTwo.value, bet.value)">
+<button class="w-full mt-4" appButton (click)="submit(bet.value)">
   Submit
 </button>

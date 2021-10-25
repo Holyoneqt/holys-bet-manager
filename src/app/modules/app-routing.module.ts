@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { EventComponent } from '../routes/event/event.component';
 import { HomeComponent } from '../routes/home/home.component';
-import { NightComponent } from '../routes/night/night.component';
 
 export const AppRoute = {
     Home: 'home',
-    Night: 'night',
+    Event: 'event',
     Fights: 'fights',
 }
 
@@ -19,10 +19,16 @@ const routes: Routes = [
     {
         path: AppRoute.Home,
         component: HomeComponent,
+        data: {
+          transtitionState: AppRoute.Home
+        }
     },
     {
-        path: `${AppRoute.Night}/:id`,
-        component: NightComponent,
+        path: `${AppRoute.Event}/:id`,
+        component: EventComponent,
+        data: {
+          transtitionState: AppRoute.Event
+        }
     }
 ];
 

@@ -10,4 +10,8 @@ export const environment = {
     appId: '1:730419012957:web:6d18e3d27aecd44dcf74b4',
     measurementId: 'G-ZJYKXF4JJG',
   },
+  sportsdata: {
+    apiKey: 'b62ac1fb9a5042219aff0c8fc99edfe6',
+    baseUrl: 'https://api.sportsdata.io/v3/mma/stats/json',
+  }
 };

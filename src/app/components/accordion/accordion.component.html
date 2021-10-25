@@ -1,0 +1,6 @@
+<div class="app-accordion-toggle" (click)="toggle()">
+  <ng-content select="[accordionTitle]"></ng-content>
+</div>
+<div class="app-accordion-content" [@collapse]="accordionState$ | async">
+  <ng-content></ng-content>
+</div>

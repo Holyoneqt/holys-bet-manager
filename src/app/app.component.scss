@@ -6,7 +6,8 @@
   .header {
     width: 100%;
     height: var(--header-height);
-    background-color: var(--color-primary);
+    background-color: var(--color-dark);
+    color: var(--color-light);
 
     display: flex;
     align-items: center;
@@ -19,6 +20,6 @@
   .content {
     flex-grow: 1;
     height: 100%;
-    background-color: var(--color-light);
+    background-color: var(--color-light-accent);
   }
 }

@@ -1,8 +1,8 @@
 :root {
   --color-white: #fff;
   --color-dark: #293241;
-  --color-light: #fafafa;
-  --color-light-accent: #e1e1e1;
+  --color-light: #f9f8f7;
+  --color-light-accent: #ece9e7;
 
   --color-primary: #98c1d9;
   --color-primary-400: #e0fbfc;
@@ -10,7 +10,11 @@
 
   --color-secondary: #ee6c4d;
 
-  --header-height: 60px;
+  --header-height: 82px;
 
   --layout-spacing: 20px;
+
+  --font-base: 18px;
+  --font-large: 24px;
+  --font-small: 14px;
 }

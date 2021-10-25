@@ -6,8 +6,8 @@
 @import './styles/reset.scss';
 @import './styles/typo.scss';
 @import './styles/spacing.scss';
+@import './styles/overlay.scss';
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 // Custom Theming for Angular Material

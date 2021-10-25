@@ -16,13 +16,10 @@ export class ContextMenuDirective implements OnInit {
   @Output('contextMenuClick') onContextMenuItemClick =
     new EventEmitter<string>();
 
-  @HostListener('click')
-  public onClick() {
-    if (this.overlayRef.hasAttached()) {
-      this.hide();
-    } else {
-      this.show();
-    }
+  @HostListener('click', ['$event'])
+  public onClick(event: MouseEvent) {
+    event.stopPropagation();
+    this.handleOnClick();
   }
 
   private overlayRef: OverlayRef;
@@ -54,7 +51,15 @@ export class ContextMenuDirective implements OnInit {
       backdropClass: 'cdk-overlay-transparent-backdrop',
     });
     this.overlayRef.backdropElement;
-    this.overlayRef.backdropClick().subscribe(() => this.onClick());
+    this.overlayRef.backdropClick().subscribe(() => this.handleOnClick());
+  }
+
+  private handleOnClick(): void {
+    if (this.overlayRef.hasAttached()) {
+      this.hide();
+    } else {
+      this.show();
+    }
   }
 
   public show(): void {

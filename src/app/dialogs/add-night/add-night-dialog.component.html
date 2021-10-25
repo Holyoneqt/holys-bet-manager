@@ -1,0 +1,6 @@
+<div *ngFor="let event of schedule$ | async" class="app-add-night-dialog-item" (click)="submit(event.EventId)">
+  <h4 class="text-center mb-2">
+    {{ event.Name }}
+  </h4>
+  <p class="text-center">{{ event.DateTime | date: "dd.MM.yyyy" }}</p>
+</div>

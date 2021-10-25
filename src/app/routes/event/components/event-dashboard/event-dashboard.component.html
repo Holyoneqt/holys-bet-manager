@@ -1,9 +1,9 @@
 <div class="night-dashboard-grid">
   <div class="night-dashboard-grid-row header">
-    <span></span><span>Einsatz</span><span>Gewinn</span><span>Total</span>
+    <span></span><span class="text-small">Einsatz</span><span class="text-small">Gewinn</span><span class="text-small">Total</span>
   </div>
   <ng-container
-    *ngFor="let player of night?.players"
+    *ngFor="let player of event?.players"
     [ngTemplateOutlet]="playerSummary"
     [ngTemplateOutletContext]="{ data: getPlayerSummary(player) }"
   >

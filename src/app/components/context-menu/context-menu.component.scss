@@ -6,6 +6,7 @@
 
   &-item {
     display: flex;
+    align-items: center;
     gap: 8px;
     min-width: 164px;
     padding: 8px 16px;
@@ -14,5 +15,9 @@
     &:hover {
       background-color: var(--color-light);
     }
+  }
+
+  &-seperator {
+    border-bottom: 1px solid var(--color-light-accent);
   }
 }

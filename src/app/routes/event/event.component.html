@@ -1,0 +1,65 @@
+<div *ngIf="event$ | async as event" class="grid">
+  <h1 class="text-center">{{ event.ShortName }}</h1>
+  <app-card>
+    <app-event-dashboard [event]="event"></app-event-dashboard>
+  </app-card>
+
+  <div
+    *ngFor="let card of getFightsGroupedByCard(event); trackBy: trackByIndex"
+  >
+    <p class="text-center text-bold text-small mb-2 mt-2">{{ card.name }}</p>
+    <app-accordion *ngFor="let fight of card.fights">
+      <div accordionTitle>
+        <div
+          class="app-event-context-menu"
+          [appContextMenu]="contextMenuFight"
+          (contextMenuClick)="handleFightContextMenuClick($event, event, fight)"
+        >
+          <mat-icon> more_horiz </mat-icon>
+        </div>
+        <p class="text-small text-center">{{ fight.WeightClass }}</p>
+        <div class="flex justify-between text-bold text-large">
+          <p class="w-full text-center">{{ fight.Fighters[0].LastName }}</p>
+          <p class="w-full text-center">{{ fight.Fighters[1].LastName }}</p>
+        </div>
+      </div>
+      
+      <ng-container *ngIf="(getBetOfFight(fight.FightId, event)) as bet; else noBet">
+        <div class="grid grid-2 mt-2">
+          <div class="flex flex-col">
+            <p class="text-bold text-center">{{ bet.fighters.first.name }}</p>
+            <p class="text-center" *ngFor="let player of bet.fighters.first.players">{{ player }}</p>
+          </div>
+          <div class="flex flex-col">
+            <p class="text-bold text-center">{{ bet.fighters.second.name }}</p>
+            <p class="text-center" *ngFor="let player of bet.fighters.second.players">{{ player }}</p>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #noBet>
+        <h4 class="text-center mt-2">No Bets placed yet</h4>
+      </ng-template>
+    </app-accordion>
+  </div>
+
+  <app-card
+    [contextMenu]="contextMenuEdit"
+    (contextMenuClick)="addPlayers(event)"
+    class="mt-5"
+  >
+    <p class="text-large text-center mb-2 text-bold">Players</p>
+    <div class="grid grid-2">
+      <p *ngFor="let player of event.players" class="text-center">
+        {{ player }}
+      </p>
+    </div>
+    <button
+      *ngIf="event.players === undefined || event.players?.length === 0"
+      class="mt-6"
+      appButton
+      (click)="addPlayers(event)"
+    >
+      Add Players
+    </button>
+  </app-card>
+</div>

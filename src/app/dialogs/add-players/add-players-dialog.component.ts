@@ -1,8 +1,6 @@
 import { Component, Inject, OnInit, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
-import { Night } from 'src/app/models/night.model';
+import { Event } from 'src/app/models/ufc.models';
 
 import { InputComponent } from '../../components/input/input.component';
 
@@ -28,19 +26,18 @@ export class AddPlayersDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AddPlayersDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Observable<Night>
+    @Inject(MAT_DIALOG_DATA) public event: Event
   ) {}
 
   ngOnInit(): void {
-    this.data.pipe(first()).subscribe((night) => {
-      if (night.players === undefined || night.players.length === 0) {
-        this.players = [...Array(6).keys()].map((v, i) => ({
-          index: i+ 1,
-          name: '',
-        }));
-      }
-      this.players = night.players.map((p, i) => ({ index: i + 1, name: p }));
-    });
+    if (this.event.players === undefined || this.event.players.length === 0) {
+      this.players = [...Array(6).keys()].map((v, i) => ({
+        index: i+ 1,
+        name: '',
+      }));
+    } else {
+      this.players = this.event.players.map((p, i) => ({ index: i + 1, name: p }));
+    }
   }
 
   public addPlayer(): void {
@@ -48,7 +45,6 @@ export class AddPlayersDialogComponent implements OnInit {
   }
 
   public submit(): void {
-    console.log(this.inputValues);
     this.dialogRef.close(
       this.inputValues
         .map((input) => input.value)

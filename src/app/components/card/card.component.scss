@@ -4,8 +4,13 @@
   width: 100%;
   padding: 16px;
   background-color: var(--color-white);
-  border-radius: 8px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 12px;
+  transition: .3s ease;
+
+  &:hover {
+    background-color: var(--color-light);
+  }
 
   &.content-center {
     .app-card-content {
@@ -27,6 +32,7 @@
 
   &-action {
     justify-content: center;
+
   }
 
   &-context-menu {

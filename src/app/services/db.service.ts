@@ -5,22 +5,22 @@ import { first, map, mapTo } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Fight, Fighter } from '../models/fight.model';
-import { Night } from '../models/night.model';
+import { Event } from '../models/ufc.models';
 
 @Injectable({ providedIn: 'root' })
 export class AppDbService {
-  private nights: DatabaseReference;
+  private events: DatabaseReference;
 
   constructor(private db: Database) {
-    this.nights = ref(this.db, 'nights');
+    this.events = ref(this.db, 'events');
   }
 
   public getRef(path: string): DatabaseReference {
     return ref(this.db, path);
   }
 
-  public getAllNights(): Observable<Night[]> {
-    return objectVal<any>(this.nights).pipe(map(this.mapToArray));
+  public getAllEvents(): Observable<Event[]> {
+    return objectVal<any>(this.events).pipe(map(this.mapToArray));
   }
 
   public getAllFightsOfNight(id: string): Observable<Fight[]> {
@@ -29,26 +29,21 @@ export class AppDbService {
     );
   }
 
-  public getNightRef(id: string): DatabaseReference {
-    return ref(this.db, `nights/${id}`);
+  public getEventRef(eventId: number | string): DatabaseReference {
+    return ref(this.db, `events/${eventId}`);
   }
 
   public getFightRef(nightId: string, id: string): DatabaseReference {
     return ref(this.db, `nights/${nightId}/fights/${id}`);
   }
 
-  public createNewNight(): Observable<Night> {
-    const newId = uuidv4();
-    const newDoc = ref(this.db, `nights/${newId}`);
-    const newNight: Night = {
-      id: newId,
-      name: 'Created night',
-      timestamp: new Date().getTime(),
-      players: [],
-      fights: [],
-    };
+  public createNewEvent(event: Event): Observable<void> {
+    const newDoc = ref(this.db, `events/${event.EventId}`);
 
-    return from(set(newDoc, newNight)).pipe(first(), mapTo(newNight));
+    return from(set(newDoc, {
+      ...event,
+      players: [],
+    } as Event));
   }
 
   public createNewFight(
