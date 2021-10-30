@@ -27,12 +27,12 @@ export class EventDashboardComponent implements OnInit {
     let totalWin = 0;
     allBets.forEach((bet) => {
       let betOn = 0;
-      if (bet.fighters.first.players.includes(player)) {
+      if ((bet.fighters.first.players ?? []).includes(player)) {
         totalBets += bet.betAmount ?? 0;
         betOn = bet.fighters.first.id;
       }
 
-      if (bet.fighters.second.players.includes(player)) {
+      if ((bet.fighters.second.players ?? []).includes(player)) {
         totalBets += bet.betAmount ?? 0;
         betOn = bet.fighters.second.id;
       }

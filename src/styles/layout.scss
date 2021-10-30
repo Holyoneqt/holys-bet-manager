@@ -38,6 +38,10 @@
   flex-direction: column;
 }
 
+.items-center {
+  align-items: center;
+}
+
 .justify-between {
   justify-content: space-between;
 }
@@ -53,6 +57,10 @@
 
 .grid-2 {
   grid-template-columns: 1fr 1fr;
+}
+
+.grid-3 {
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .colspan-2 {

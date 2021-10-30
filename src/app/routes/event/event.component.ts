@@ -8,6 +8,7 @@ import { collapseAnimation } from 'src/app/animations/collapse';
 import { fadeInAnimation } from 'src/app/animations/fade';
 import { PlaceBetsDialogComponent, PlaceBetsDialogData } from 'src/app/dialogs/add-fight/add-fight.component';
 import { AddPlayersDialogComponent } from 'src/app/dialogs/add-players/add-players-dialog.component';
+import { FighterStatsDialogComponent } from 'src/app/dialogs/fighter-stats/fighter-stats.component';
 import { SetWinnerDialogComponent } from 'src/app/dialogs/set-winner/set-winner.component';
 import { ContextMenu, ContextMenuItem } from 'src/app/models/context-menu.model';
 import { Bet, Event, Fight } from 'src/app/models/ufc.models';
@@ -30,6 +31,7 @@ export class EventComponent implements OnInit {
 
   public readonly contextMenuEdit = ContextMenu.Edit;
   public readonly contextMenuFight: ContextMenuItem[] = [
+    { type: 'item', icon: 'info', key: 'info', display: 'Fighter Stats' },
     { type: 'item', icon: 'paid', key: 'bet', display: 'Bet' },
     { type: 'seperator' },
     {
@@ -66,6 +68,15 @@ export class EventComponent implements OnInit {
   ): void {
     if (key === 'bet') return this.placeBets(event, fight);
     if (key === 'set-winner') return this.setWinner(event, fight);
+    if (key === 'info') return this.openFighterStats(fight);
+  }
+
+  public openFighterStats(fight: Fight): void {
+    this.dialog.open(FighterStatsDialogComponent, {
+      data: {
+        fighters: fight.Fighters
+      }
+    });
   }
 
   public setWinner(event: Event, fight: Fight): void {
@@ -102,9 +113,17 @@ export class EventComponent implements OnInit {
       .afterClosed()
       .subscribe((bet: Bet) => {
         if (bet) {
-          update(this.eventRef, {
-            bets: [...(event.bets ?? []), bet],
-          });
+          const betIndex = (event.bets ?? []).findIndex(e => e.fightId === bet.fightId);
+          if (betIndex === -1) {
+            update(this.eventRef, {
+              bets: [...(event.bets ?? []), bet],
+            });
+          } else {
+            (event.bets ?? [])[betIndex] = bet;
+            update(this.eventRef, {
+              bets: event.bets,
+            });
+          }
         }
       });
   }
@@ -139,6 +158,10 @@ export class EventComponent implements OnInit {
     });
 
     return fights;
+  }
+
+  public getWinnerOfFight(event: Event, fight: Fight): number {
+    return event.bets?.find(bet => bet.fightId === fight.FightId)?.winnerId ?? 0;
   }
 
   public getBetOfFight(fightId: number, event: Event): Bet | undefined {

@@ -1,0 +1,13 @@
+.gold-underline {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    border: 1px solid var(--color-gold);
+    border-radius: 2px;
+    bottom: -4px;
+    width: 100%;
+    left: 0;
+    right: 0;
+  }
+}
