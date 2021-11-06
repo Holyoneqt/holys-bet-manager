@@ -153,7 +153,7 @@ export class EventComponent implements OnInit {
     cards?.forEach((card) => {
       fights.push({
         name: card,
-        fights: (event.Fights ?? []).filter((f) => f.CardSegment === card),
+        fights: (event.Fights ?? []).filter((f) => f.CardSegment === card && f.Status !== 'Canceled'),
       });
     });
 
